@@ -1,3 +1,5 @@
+// Author: Garry Cummins
+// OOP Project
 package ie.gmit.oop;
 
 import java.awt.Menu;
