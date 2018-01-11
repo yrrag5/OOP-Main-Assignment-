@@ -2,14 +2,9 @@
 // OOP Project
 package ie.gmit.oop;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.concurrent.BlockingQueue;
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.*;
 
 public class DocumentParser implements Runnable{
 	private BlockingQueue<Shingle>queue;
@@ -29,26 +24,19 @@ public class DocumentParser implements Runnable{
 
 	public void run() {
 		
-		BufferedReader br = null;
-		try {
-		    br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
 		
-		String line = "";
 		try {
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+			String line = null;
 			while((line = br.readLine())!= null) {
-					if (line.length() > 0) {
-						//Splitting the line on one or more 
-						//whitespace elements. s is space, + is
-						//1 or more spaces.
-						String uLine = line.toUpperCase();
-						String[] words = uLine.split("\\s+"); // Can also take a regexpression
-						addWordsToBuffer(words);
-		
-				}// if
-	
+				if (line.length() > 0) {
+					//Splitting the line on one or more 
+					//whitespace elements. s is space, + is
+					//1 or more spaces.
+					String uLine = line.toUpperCase();
+					String[] words = uLine.split(" "); // Can also take a regexpression
+					addWordsToBuffer(words);
+				}
 		}// while
 			
 		while(buffer.size() != 0) {
@@ -57,19 +45,16 @@ public class DocumentParser implements Runnable{
 				queue.put(s); // Blocking method. Add is not a blocking method
 			}
 		}
+		System.out.println("Completed");
+		flushBuffer();
+		br.close();
 		
 		} catch(IOException e) {
 			System.out.println("Error file " + file + " not found, please try again");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		flushBuffer();
-		try {
-			br.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 	}// Run
 	
 
