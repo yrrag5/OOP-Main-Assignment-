@@ -5,6 +5,10 @@ package ie.gmit.oop;
 public class Shingle {
 	private int docId;
 	private int hashcode;
+	
+	public Shingle(int doc, int h) {
+		
+	}
 	//Constructor + Getters/Setters
 	public int getDocId() {
 		return docId;
