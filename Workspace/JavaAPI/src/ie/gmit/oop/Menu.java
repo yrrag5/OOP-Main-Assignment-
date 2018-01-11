@@ -5,13 +5,18 @@ import java.util.Scanner;
 public class Menu {
 	private int select = -1;
 	private String f1, f2;
-	private int shingle, bQueue;
+	private int shingle;
 	private boolean run = true;
 	private Scanner sc = new Scanner(System.in);
 	
+	public Menu() {
+		
+	}
+	
 	public void show() {
 		do {
-			System.out.println("(1) Parse and compare document\n (2) Exit");
+			System.out.println("===== Java API =====");
+			System.out.println("(1) Parse and compare documents\n(2) Exit");
 			select = sc.nextInt();
 			
 			switch (select) {
@@ -29,7 +34,7 @@ public class Menu {
 
 
 	private void compareFiles() {
-		System.out.println("Comparing documents");
+		System.out.println("Comparing documents...");
 	
 		System.out.println("Enter file name 1:");
 		f1 = sc.next();
@@ -38,12 +43,9 @@ public class Menu {
 		f2 = sc.next();
 	
 		System.out.println("Enter the size of the shingle");
-		shingle = sc.nextInt();
+		shingle = sc.nextInt();		
 		
-		System.out.println("Enter size of the blocking queue");
-		bQueue = sc.nextInt();
-		
-		Launcher 1 = new Launcher();
-		1.Launch(f1, f2, shingle, bQueue);
+		Launcher l = new Launcher();
+		l.Launch(f1, f2, shingle);
 	}// Compare files
 }// Menu

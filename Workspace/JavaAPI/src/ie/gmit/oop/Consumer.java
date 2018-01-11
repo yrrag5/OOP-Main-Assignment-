@@ -2,6 +2,9 @@
 // OOP Project
 package ie.gmit.oop;
 
+import java.awt.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -11,13 +14,13 @@ public class Consumer implements Runnable {
 	private BlockingQueue<Shingle> queue;
 	private int k;
 	private int[] minhashes; // The random stuff
-	private Map<Integer, List<Integer>> map = new HashMap<>();
+	//private Map<Integer, List<Integer>> map = new HashMap<>();
 	private ExecutorService pool;
 
 	public Consumer(BlockingQueue<Shingle>q, int k, int poolSize) {
 		this.queue = q;
 		this.k = k;
-		pool = Executors.fixedSizeThreadPool(poolSize);
+		//pool = Executors.fixedSizeThreadPool(poolSize);
 		init();
 	}
 
@@ -32,11 +35,17 @@ public class Consumer implements Runnable {
 	public void run() {
 		int docCount = 2; // FIX THIS
 		while(docCount > 0) {
-			Shingle s = queue.take(); // Blocking method
+			Shingle s = null;
+			try {
+				s = queue.take();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} // Blocking method
 			if(s instanceof Poison) {
 				docCount--;
 			}
-			else {
+			/*else {
 				pool.execute(new Runnable() {
 					for(int i = 0; i < minhashes.length; i++) {
 						int value = s.getHashCode()^minhashes[i]; // ^ - xor(Random generated key)
@@ -55,9 +64,7 @@ public class Consumer implements Runnable {
 						}
 					}// For
 				}// Execute
-			}// Else
-		}// While
+			}// Else*/
+		} //While
 	}// Run
-
-
-} // Consumer
+}// Consumer
